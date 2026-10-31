@@ -1,0 +1,20 @@
+{
+  "dataset": "ESC-50",
+  "category": "crying_baby",
+  "filename": "1-187207-A-20.wav",
+  "source_url": "https://raw.githubusercontent.com/karoldvl/ESC-50/master/audio/1-187207-A-20.wav",
+  "metadata": {
+    "filename": "1-187207-A-20.wav",
+    "fold": "1",
+    "target": "20",
+    "category": "crying_baby",
+    "esc10": "True",
+    "src_file": "187207",
+    "take": "A"
+  },
+  "license": "CC BY-NC 3.0",
+  "license_url": "https://github.com/karoldvl/ESC-50#license",
+  "source_sha256": "ddf5bf45f73bc73d1838bf0cb6af530584f324aef513112ee15c210e83ecbd6b",
+  "prepared_sha256": "e0194b9f30d12d226895c163e601c1f8bc66b43f1a004b13a7ea39423384ed7c",
+  "resample": "scipy.signal.resample_poly 44100 to 16000 Hz"
+}
