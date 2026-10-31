@@ -1,7 +1,7 @@
 # 낙상·침대 가장자리 위험 코드
 
 `src/camera_fall`은 몸 박스 탐지·추적, 침대 경계 보정, R0 가장자리 접근 경고와 시계열 모델, 영상 단위 평가 코드를 포함한다. R0의 출력은 실제 추락 사건의 확정 판정이 아니다.
-학습 환경은 `requirements-train.txt`, 기존 64비트 파이 프로필은 `requirements-pi.txt`다. 현재 사용 중인 32비트 Pi 4의 NCNN 통합 실행은 `codex/suffocation-prevention` 브랜치의 `deploy/pi`에 있다. 해당 통합 실행은 한 번의 YOLO 추론으로 자세·얼굴 판정과 가장자리 규칙에 같은 몸 박스를 공급한다.
+의존성은 루트 `requirements.txt`에 통합했으며 PC와 ARM 환경에 따라 설치 항목을 구분한다. 현재 사용 중인 32비트 Pi 4의 NCNN 통합 실행은 `codex/suffocation-prevention` 브랜치의 `deploy/pi`에 있다. 해당 통합 실행은 한 번의 YOLO 추론으로 자세·얼굴 판정과 가장자리 규칙에 같은 몸 박스를 공급한다.
 
 ```bash
 python scripts/preflight.py

@@ -70,6 +70,7 @@ def main():
         (stage/'configs').mkdir()
         shutil.copy2(ROOT/'configs/risk_r0.yaml',stage/'configs/risk_r0.yaml')
         shutil.copy2(ROOT/'LICENSE',stage/'LICENSE')
+        shutil.copy2(ROOT/'requirements.txt',stage/'requirements.txt')
         model=stage/'models/infant/model.onnx'
         model.parent.mkdir(parents=True)
         shutil.copy2(args.model,model)

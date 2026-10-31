@@ -1,3 +1,0 @@
-# NumPy, OpenCV, Picamera2 and libcamera come from the same Raspberry Pi OS apt repository.
-onnxruntime==1.20.1
-PyYAML==6.0.2

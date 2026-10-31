@@ -1,7 +1,7 @@
 # 울음 개인화·돌봄 추천
 
 `cry_personal.py`는 수유·기저귀·안아주기/자세 바꾸기 중 먼저 확인해 볼 행동을 실험적으로 추천한다. 원인 확정이나 의료 진단 모델이 아니다. `sim/`에는 원본 시뮬레이션·특징 변환·YAMNet 내보내기 코드가 있다.
-시뮬레이션 의존성은 `requirements-cry-simulation.txt`로 구분했다. 실시간 추론에는 TensorFlow 학습 환경이 필요하지 않다. 현재 32비트 Bullseye 파이에서는 NumPy와 `tflite-runtime==2.13.0`, 마이크 입력용 ALSA를 사용한다.
+시뮬레이션 의존성도 루트 `requirements.txt`에 통합했다. 전체 시뮬레이션·원본 YAMNet 내보내기는 Python 3.11 PC에서 설치하며 TensorFlow 2.15는 Python 3.12에서 설치 대상이 아니다. 실시간 추론에는 TensorFlow 학습 환경이 필요하지 않다. 현재 32비트 Bullseye 파이에서는 NumPy와 `tflite-runtime==2.13.0`, 마이크 입력용 ALSA를 사용한다.
 
 ```bash
 PYTHONPATH=src OPENBLAS_NUM_THREADS=1 python -m sky_edge.personalization demo

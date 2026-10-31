@@ -1,7 +1,7 @@
 # 자세·얼굴 유지 및 베개·장난감 추가 학습
 
 `scripts/prepare_dataset.py`, `train.py`, `run_experiments.py`, `evaluate.py`, `sweep_thresholds.py`, `export_model.py`는 기존 5클래스 학습·평가 흐름이다. 패키지는 `src/sleepsafe`에 배치했고 상대 경로의 기준은 이 저장소 루트다.
-`training/objects`는 L4에서 실행한 7클래스 추가 학습 코드다. 기존 사진 재학습과 출처별 부분 라벨 마스크를 사용해 라벨이 없는 클래스를 음성으로 학습하지 않도록 한다. 기존 몸/얼굴 클래스와 pillow/toy를 유지한다. 전용 환경은 `training/objects/requirements.txt`이며 5클래스의 기존 학습 환경과 분리한다.
+`training/objects`는 L4에서 실행한 7클래스 추가 학습 코드다. 기존 사진 재학습과 출처별 부분 라벨 마스크를 사용해 라벨이 없는 클래스를 음성으로 학습하지 않도록 한다. 기존 몸/얼굴 클래스와 pillow/toy를 유지한다. PC 공통 의존성은 루트 `requirements.txt`이며, YOLO 버전을 부분 라벨 구현에 필요한 8.4.176으로 통일했다. 기존 5클래스 실험의 8.3.221 환경과 다르므로 과거 결과의 재현에는 당시 환경 기록이 필요하다.
 해당 폴더 아래 `bundle/manifest.json`, `bundle/dataset`, `bundle/baseline/best.pt`를 준비한 뒤 실행한다. 데이터와 체크포인트는 Git에 포함하지 않았다. 원래 스크립트의 고정 입력 해시·Ultralytics 8.4.176·NVIDIA L4 검사 조건을 유지했으므로 다른 환경/데이터에서는 먼저 해당 조건을 검토해야 한다.
 
 ```bash

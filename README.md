@@ -15,10 +15,10 @@
 |---|---|
 | PC 코드 확인·테스트 | Python 3.11 권장, Git, Windows 또는 Linux. 기존 통합 테스트는 Python 3.12에서도 확인 |
 | 현재 파이 통합 실행 | Raspberry Pi 4, Raspberry Pi OS Bullseye **32비트 ARMv7**, Python 3.9, USB 카메라·마이크 |
-| 기존 5클래스 YOLO 학습 | 별도 PC 가상환경, `requirements-posture-train.txt`; GPU 사용 시 CUDA에 맞는 PyTorch 필요 |
-| 물체 추가 학습 | NVIDIA L4, 별도 환경의 `training/objects/requirements.txt` 및 CUDA용 PyTorch |
+| 기존 5클래스 YOLO 학습 | PC `requirements.txt`; GPU 사용 시 CUDA에 맞는 PyTorch 필요 |
+| 물체 추가 학습 | NVIDIA L4, 공통 `requirements.txt` 및 CUDA용 PyTorch |
 
-현재 32비트 파이는 NCNN CPU와 `tflite-runtime==2.13.0`을 사용합니다. `requirements-pi.txt`는 별도의 **64비트 Python 3.11 ONNX Runtime 프로필**이므로 32비트 설치에 사용하지 않습니다. 파이 실시간 실행에는 PyTorch나 TensorFlow 학습 환경이 필요하지 않습니다.
+현재 32비트 파이는 NCNN CPU와 `tflite-runtime==2.13.0`을 사용합니다. 공통 `requirements.txt`의 환경 마커가 PC와 ARM 의존성을 구분합니다. ARMv7에서는 검증된 piwheels 파일을 준비하는 설치 스크립트를 사용합니다. 64비트 파이의 NumPy·OpenCV는 apt 패키지를 사용하며, 해당 설치기는 Python 3.11/3.12를 대상으로 합니다. 파이 실시간 실행에는 PyTorch나 TensorFlow 학습 환경이 필요하지 않습니다.
 
 ## 2. PC 설치와 기본 확인
 
@@ -40,15 +40,15 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 
-PowerShell에서 활성화가 제한되면 명령의 `python` 대신 `.\.venv\Scripts\python.exe`를 사용합니다. 다음은 테스트·기존 낙상 연구 코드용 설치입니다. GPU 재학습 환경은 7절에서 따로 설정합니다.
+PowerShell에서 활성화가 제한되면 명령의 `python` 대신 `.\.venv\Scripts\python.exe`를 사용합니다. 아래 공통 파일로 PC 학습·평가·테스트 의존성을 설치합니다. CUDA를 사용한다면 GPU에 맞는 PyTorch·torchvision을 먼저 설치합니다. 학습 프레임워크가 포함돼 다운로드 용량이 클 수 있습니다.
 
 ```bash
 python -m pip install --upgrade pip
-python -m pip install -r requirements-train.txt
+python -m pip install -r requirements.txt
 python -m unittest discover -s tests -v
 ```
 
-머지 후 통합 테스트 **51개 통과**를 확인했습니다. 이 테스트는 모델 입출력·판정 규칙·파일 출력·미리보기 API 등을 점검하며, 실제 낙상 사건이나 울음 원인의 정확도를 측정하는 평가는 아닙니다.
+의존성 환경 조건 검증을 포함해 통합 테스트 **54개 통과**를 확인했습니다. 이 테스트는 모델 입출력·판정 규칙·파일 출력·미리보기 API 등을 점검하며, 실제 낙상 사건이나 울음 원인의 정확도를 측정하는 평가는 아닙니다.
 
 모델과 카메라 없이도 개인화 추천 시뮬레이션을 확인할 수 있습니다.
 
@@ -181,7 +181,7 @@ tail -n 5 ~/sky-eye/output/events.jsonl
 ### 기존 자세·얼굴 5클래스
 
 ```bash
-python -m pip install -r requirements-posture-train.txt
+python -m pip install -r requirements.txt
 python scripts/prepare_dataset.py --raw /path/to/roboflow-dataset
 python scripts/train.py --data datasets/sleepsafe/data_original.yaml --name A_original_320_aug --imgsz 320
 python scripts/run_experiments.py --help
@@ -193,7 +193,7 @@ python scripts/export_model.py --help
 
 ### 베개·장난감 추가 학습
 
-별도 가상환경에 `training/objects/requirements.txt`를 설치하고, [물체 추가 학습 안내](docs/POSTURE_AND_OBJECTS.md)에 따라 `training/objects/bundle/`의 데이터·매니페스트·기존 체크포인트를 준비합니다. 이 실행 코드는 고정 입력 해시, Ultralytics 8.4.176, L4 GPU 조건을 검사합니다.
+동일한 PC `requirements.txt`를 설치하고, [물체 추가 학습 안내](docs/POSTURE_AND_OBJECTS.md)에 따라 `training/objects/bundle/`의 데이터·매니페스트·기존 체크포인트를 준비합니다. 이 실행 코드는 고정 입력 해시, Ultralytics 8.4.176, L4 GPU 조건을 검사합니다.
 
 ```bash
 # Linux 학습 서버, 저장소 루트에서
@@ -201,8 +201,14 @@ PYTHONPATH=src python training/objects/test_partial_labels.py
 PYTHONPATH=src python training/objects/train_objects.py
 ```
 
-기타 진입점은 [낙상·가장자리 연구 코드](docs/FALL_DETECTION.md), [울음 개인화·시뮬레이션](docs/CRY_PERSONALIZATION.md)을 참고하세요. 전체 울음 시뮬레이션·YAMNet 재내보내기용 `requirements-cry-simulation.txt`는 별도의 Python 3.10/3.11 PC 환경에서 사용하며 파이에 설치하지 않습니다.
+기타 진입점은 [낙상·가장자리 연구 코드](docs/FALL_DETECTION.md), [울음 개인화·시뮬레이션](docs/CRY_PERSONALIZATION.md)을 참고하세요. 전체 울음 시뮬레이션·YAMNet 재내보내기는 Python 3.11 PC 환경을 사용합니다. 공통 파일의 TensorFlow 2.15·TensorFlow Hub 0.15는 PC Python 3.10/3.11에만 설치됩니다. Python 3.12에서는 기본 개인화 데모·통합 테스트는 가능하지만 원본 TensorFlow 2.15 내보내기 환경은 설치되지 않습니다.
 
 ## 동작 범위
 
 자세·얼굴 위험은 기본 5초 지속 시 시작하고 정상 3초 지속 시 해소합니다. 가장자리 출력은 접근 경고이며 실제 추락 확정 판정이 아닙니다. 울음 추천은 수유·기저귀·안아주기를 먼저 확인하는 실험적 힌트입니다. 사진 지표나 통합 테스트 결과를 실제 낙상 사건·울음 원인 정확도로 해석하지 않습니다.
+
+## 의존성 관리
+
+의존성 목록은 루트 `requirements.txt` 한 곳에서 관리합니다. 예전 환경별 requirements 파일 8개는 제거했습니다. 파이 설치기와 배포 압축 생성기도 이 파일을 사용합니다. 이미 전달한 배포 압축은 당시 파일을 유지하며, 새 구성을 반영하려면 현재 소스로 압축을 다시 만들어야 합니다.
+
+PC YOLO 버전은 부분 라벨 학습 코드의 고정 조건에 맞춰 `ultralytics==8.4.176`으로 통일했습니다. 기존 5클래스 실험에 사용한 8.3.221 환경과는 버전이 다르므로 과거 실험을 정확히 재현하려면 당시 환경 기록도 함께 확인합니다. 운영체제 패키지(ALSA, Picamera2, 64비트 파이 NumPy·OpenCV)는 apt로 별도 설치합니다.
