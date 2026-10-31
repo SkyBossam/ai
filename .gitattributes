@@ -1,3 +1,5 @@
 * text=auto eol=lf
 *.npz -text
 *.wav -text
+# Preserve byte-exact model assets used by checksum verification.
+models/cry-personal/cry_personal_ctx.json -text
