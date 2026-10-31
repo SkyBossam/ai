@@ -1,0 +1,15 @@
+{
+  "model": "models/cry-personal/yamnet_emb.tflite",
+  "class_map": "models/cry/yamnet_class_map.csv",
+  "threshold": 0.3,
+  "device": "plughw:CARD=GH300,DEV=0",
+  "status_path": "logs/cry/status.json",
+  "personalization": {
+    "enabled": true,
+    "artifacts": "models/cry-personal",
+    "state_path": "state/cry-personal/profile.json",
+    "command_dir": "input/cry_commands",
+    "quiet_windows": 3,
+    "max_windows": 300
+  }
+}
