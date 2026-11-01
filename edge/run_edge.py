@@ -27,7 +27,7 @@ def parse_args(argv=None):
     ap.add_argument("--model", help="ONNX 모델 경로")
     ap.add_argument("--imgsz", type=int)
     ap.add_argument("--infer-fps", type=float)
-    ap.add_argument("--server", help="웹 알림 서버 주소 (예: http://192.168.0.10:8000)")
+    ap.add_argument("--server", help="웹 알림 서버 주소 (예: http://SERVER_HOST:8000)")
     ap.add_argument("--device-id")
     ap.add_argument("--show", action="store_true", help="화면에 결과 표시 (q로 종료)")
     ap.add_argument("--max-seconds", type=float, help="이 시간(입력 기준)만큼만 실행")

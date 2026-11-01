@@ -21,7 +21,7 @@ risk:
   miss_tolerance_s: 1.0   # 조건이 이보다 짧게 안 잡히면 깜빡임으로 보고 타이머 유지 (0이면 한 프레임에 초기화)
 
 server:
-  url: null               # 예: http://192.168.0.10:8000  (null이면 콘솔에만 출력)
+  url: null               # 예: http://SERVER_HOST:8000  (null이면 콘솔에만 출력)
   device_id: crib-01
   heartbeat_s: 2.0        # 생존 신호 주기 (서버는 8초간 없으면 연결 끊김으로 봄)
 

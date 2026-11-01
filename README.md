@@ -70,7 +70,7 @@ PYTHONPATH=src OPENBLAS_NUM_THREADS=1 python -m sky_edge.personalization demo
 
 Git에는 소스·설정·작은 개인화 변환 파일을 포함합니다. **PT/ONNX/NCNN/TFLite 가중치와 학습 데이터는 별도 준비가 필요합니다.** 저장소를 복제하는 것만으로 실시간 모델 실행에 필요한 모든 파일이 생기지는 않습니다.
 
-별도로 제공되는 `sky-eye-integrated-20261101.tar.gz`를 사용합니다. 이 파일은 현재 GitHub 저장소의 다운로드 자산으로 게시되어 있지 않으므로 프로젝트 담당자에게 전달받아야 합니다. 파일 경로·해시는 [모델 자산 안내](docs/MODEL_ASSETS.md)와 [`models/ASSETS.json`](models/ASSETS.json)을 참고하세요.
+[모델 포함 배포 압축](https://github.com/SkyBossam/ai/releases/download/v0.1.0/sky-eye-integrated-20261101.tar.gz)과 [SHA-256 확인 파일](https://github.com/SkyBossam/ai/releases/download/v0.1.0/sky-eye-integrated-20261101.tar.gz.sha256)을 [Release v0.1.0](https://github.com/SkyBossam/ai/releases/tag/v0.1.0)에서 내려받습니다. 압축에는 현재 소스와 실행용 모델·메타데이터를 포함하며, 학습 데이터와 실제 개인화 기록은 포함하지 않습니다. 파일 경로·해시는 [모델 자산 안내](docs/MODEL_ASSETS.md)와 [`models/ASSETS.json`](models/ASSETS.json)을 참고하세요.
 
 | 모델 경로 | 용도 |
 |---|---|
@@ -206,6 +206,11 @@ PYTHONPATH=src python training/objects/train_objects.py
 ## 동작 범위
 
 자세·얼굴 위험은 기본 5초 지속 시 시작하고 정상 3초 지속 시 해소합니다. 가장자리 출력은 접근 경고이며 실제 추락 확정 판정이 아닙니다. 울음 추천은 수유·기저귀·안아주기를 먼저 확인하는 실험적 힌트입니다. 사진 지표나 통합 테스트 결과를 실제 낙상 사건·울음 원인 정확도로 해석하지 않습니다.
+
+## 관련 저장소
+
+- [아이쿠 백엔드·기기 전송 프로그램](https://github.com/SkyBossam/backend)
+- [아이쿠 프론트엔드](https://github.com/SkyBossam/frontend)
 
 ## 의존성 관리
 

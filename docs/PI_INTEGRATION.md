@@ -1,10 +1,10 @@
 # 파이 통합 실행 및 아이쿠 연결
 
-## 현재 설치된 파이
+## 기본 실행 환경
 
-- 접속: `ssh pi@172.20.10.2`
-- 설치 폴더: `/home/pi/sky-eye-deploy-20261101/sky-eye-pi-armv7`
-- 바로가기: `/home/pi/sky-eye` (위 폴더를 가리키는 심볼릭 링크)
+- 접속: `ssh PI_USER@PI_HOST`
+- 설치 폴더: 배포 압축을 푼 폴더
+- 바로가기: `~/sky-eye` (설치 폴더를 가리키는 심볼릭 링크)
 - Pi 4 / Bullseye / ARMv7 32비트 / Python 3.9. 64비트 OS용 패키지가 아니다.
 - USB 카메라 `/dev/video0`, USB GH300 마이크 `plughw:CARD=GH300,DEV=0`.
 
@@ -22,7 +22,7 @@ systemctl --user status sky-eye sky-eye-cry sky-eye-export --no-pager
 PC PowerShell에서 터널을 열고 창을 유지한다:
 
 ```powershell
-ssh -L 8765:127.0.0.1:8765 pi@172.20.10.2
+ssh -L 8765:127.0.0.1:8765 PI_USER@PI_HOST
 ```
 
 브라우저: <http://127.0.0.1:8765/>. 감지 박스, 울음 점수, 돌봄 추천, 종료된 울음의 피드백 버튼, 별도 시뮬레이션 예시를 제공한다. 영상·피드백 API는 파이의 루프백에서만 수신한다.
@@ -31,11 +31,11 @@ ssh -L 8765:127.0.0.1:8765 pi@172.20.10.2
 
 | 용도 | 경로 |
 |---|---|
-| 카메라·울음·추천 통합 현재 상태 | `/home/pi/sky-eye/output/status.json` |
-| 통합 이벤트 스트림 (한 줄에 JSON 하나) | `/home/pi/sky-eye/output/events.jsonl` |
-| 원본 카메라 상태·이벤트 | `/home/pi/sky-eye/logs/YYYYMMDD-HHMMSS/{status.json,events.jsonl}` |
-| 원본 울음 상태·이벤트 | `/home/pi/sky-eye/logs/cry/{status.json,events.jsonl}` |
-| 개인화 프로필 (기기 내부용) | `/home/pi/sky-eye/state/cry-personal/profile.json` |
+| 카메라·울음·추천 통합 현재 상태 | `~/sky-eye/output/status.json` |
+| 통합 이벤트 스트림 (한 줄에 JSON 하나) | `~/sky-eye/output/events.jsonl` |
+| 원본 카메라 상태·이벤트 | `~/sky-eye/logs/YYYYMMDD-HHMMSS/{status.json,events.jsonl}` |
+| 원본 울음 상태·이벤트 | `~/sky-eye/logs/cry/{status.json,events.jsonl}` |
+| 개인화 프로필 (기기 내부용) | `~/sky-eye/state/cry-personal/profile.json` |
 
 전송기는 통합 두 파일만 읽으면 된다. `sky-eye-export.service`가 0.5초마다 상태를 갱신하며 상태 파일은 임시 파일 작성 후 교체하므로 완성된 JSON을 읽는다. 이벤트는 append 전용이다. 마지막 줄이 개행으로 끝나지 않으면 다음 갱신을 기다린다.
 
@@ -99,9 +99,7 @@ ssh -L 8765:127.0.0.1:8765 pi@172.20.10.2
 - 최초 실행에는 기존 로그도 내보낸다. 과거 이벤트를 현재 알림으로 재발송하지 않도록 수신기에서 시각과 이미 처리한 ID를 확인한다.
 - `wall_time_unix`는 UNIX 초. **영상 원본의 `ts`, `started_at`, `confirmed_at`, `ended_at`, `video_ts_s`는 monotonic 초**이므로 그대로 날짜로 해석하지 않는다. 자세 이벤트는 `wall_time_unix - payload.ts`를 더해 UNIX 시각으로 바꿀 수 있다. 울음 원본의 `wall_time_unix`, `t0/t1`, UI의 `started_at/ended_at`는 UNIX 초다.
 
-저장소 `suffocation-prevention` 브랜치의 `server/app.py` 및 `docs/api.md`는 개발용 `/devices/{id}/heartbeat`, `/devices/{id}/events` 규격을 제공한다. 현재 통합 패키지는 **파일 출력까지** 담당한다. 이 개발 서버는 수유/울음/가장자리의 전용 API가 없고 정식 아이쿠의 등록·인증·앱 프로그램도 저장소에서 확인되지 않았다. 실제 PC 백엔드의 요청 형식·주소에 맞춘 전송 및 앱 표시는 별도 연결해야 한다. 서버 설정 변경을 파이에 자동 적용하는 기능도 이 패키지에는 없다.
-
-기존 개발 서버에 연결할 때 heartbeat의 `status/reason/posture/airway/elapsed/fps`를 통합 상태에서 매핑할 수 있다. `/events`는 `risk_started/risk_ended`만 받으므로 나머지 종류를 그대로 전송하지 않는다. `risk_interrupted`를 정상 해소로 바꾸지 말고 관찰 중단으로 처리한다.
+기기 등록·인증, 분석 결과 전송과 카메라 프레임 중계는 [아이쿠 백엔드 저장소](https://github.com/SkyBossam/backend)의 `raspberry-pi/` 프로그램을 사용합니다. 이 AI 패키지는 모델 분석과 파일 출력을 담당합니다. 전송 프로그램의 설치·서버 주소 설정·기기 연결은 해당 저장소의 안내를 따릅니다. `risk_interrupted`는 관찰 중단으로 처리하며 정상 해소로 변환하지 않습니다.
 
 ## 울음 원인 시뮬레이션의 기기 적용
 
@@ -138,10 +136,11 @@ bash ~/sky-eye/start-all.sh
 
 설치에는 인터넷 및 apt 설치 권한이 필요하다. 카메라용 NCNN/OpenCV/NumPy와 Bullseye 호환 `tflite-runtime==2.13.0`을 설치한다. 설치기는 기존 `~/sky-eye`가 다른 폴더를 가리키면 덮어쓰지 않고 멈춘다. 기존 파이를 교체할 때는 먼저 서비스를 중지하고, 사용자 프로필·설정의 이전 방식을 정해야 한다. 시뮬레이션 전체 재학습은 `sim/`의 PC용 코드이며 별도의 데이터·의존성이 필요하다. 파이 실시간 추론에 pandas/TensorFlow를 설치할 필요는 없다.
 
-현재 배포에서는 카메라의 기존 부팅 설정만 유지했다. 필요할 때 직접 전체 부팅 실행을 설정할 수 있다:
+설치기는 서비스를 자동 시작하지 않습니다. 실제 장치 점검 후 재부팅 자동 실행이 필요하면 설정합니다:
 
 ```bash
 systemctl --user enable sky-eye sky-eye-cry sky-eye-export
+sudo loginctl enable-linger "$(whoami)"
 ```
 
-침대 영역 보정은 아직 `calibration_valid=false`이므로 가장자리 위험 판정은 활성화하지 않았다. 자세·얼굴, 울음 후보 및 돌봄 힌트 테스트와 별도로 실제 카메라 각도에서 보정해야 한다. 결과는 사진/공개 울음 클립과 기기 통합 점검이며 실제 낙상 사건·실제 울음 원인 성능을 입증하지 않는다.
+기본 설정은 `calibration_valid=false`이므로 침대 영역을 보정하기 전에는 가장자리 위험 판정이 비활성입니다. 자세·얼굴, 울음 후보 및 돌봄 힌트 테스트와 별도로 실제 카메라 각도에서 보정해야 한다. 결과는 사진/공개 울음 클립과 기기 통합 점검이며 실제 낙상 사건·실제 울음 원인 성능을 입증하지 않는다.

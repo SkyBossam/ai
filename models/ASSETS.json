@@ -1,23 +1,24 @@
 {
   "source_archive": "sky-eye-integrated-20261101.tar.gz",
+  "release_url": "https://github.com/SkyBossam/ai/releases/tag/v0.1.0",
   "files": {
-    "models/cry/model_meta.json": "2001c40b24d8230215044a139ed0bde86ba4985e0d225eaccf6b2a566284e48f",
-    "models/cry/yamnet.tflite": "10c95ea3eb9a7bb4cb8bddf6feb023250381008177ac162ce169694d05c317de",
-    "models/cry/yamnet_class_map.csv": "cdf24d193e196d9e95912a2667051ae203e92a2ba09449218ccb40ef787c6df2",
     "models/cry-personal/cry_personal_acoustic.npz": "cce103c4f4bbd4d3aa1596e1d9894d840bafde7df120fb447e6d32821cb2eed0",
     "models/cry-personal/cry_personal_basis.npz": "fc24b5ba3c8e8adc129a9b20f7a604a42234678557833ead3762a4c4eea8e46e",
     "models/cry-personal/cry_personal_ctx.json": "d7949181e9c45ef488091aa316c02e2401c6d4e1bf20702fcf0fe4e60547ec59",
-    "models/cry-personal/model_meta.json": "6f7b01004e7ebe75e3b7c84491a5199206693c8479e9271bfbb4991e2a759f69",
+    "models/cry-personal/model_meta.json": "6fea51bc8e768c4461b24721a9236815d20e3f7d47e2a55f01416a16c3655feb",
     "models/cry-personal/yamnet_emb.tflite": "284510bf6428c634cd6442e37a911d986a7d26f61dacdc7d024ff1afde9b8cb3",
+    "models/cry/model_meta.json": "2e5eb3938d6aebf654692409e0842bfdb46a6fd91c69f4459368f852aff702e3",
+    "models/cry/yamnet.tflite": "10c95ea3eb9a7bb4cb8bddf6feb023250381008177ac162ce169694d05c317de",
+    "models/cry/yamnet_class_map.csv": "b03d48f9ebe23f69ea825193de7e736934086a12410f0af47babe897b78bc0d3",
     "models/infant/model.ncnn.bin": "fe75a154c7b3b58a7b106953d21c67af951d78a1230ace1849800e4d5368d55f",
     "models/infant/model.ncnn.param": "3fb1a450070cccad1df7bca47c324b68fcdf4252562b52fd8ea5008255e10315",
     "models/infant/model.onnx": "e2546caef8500e8aaa80b0edec071d77f3b0975daccf560416dc64e8ddc73352",
-    "models/infant/model_meta.json": "13abae7b0cec7bbb52877861d12423bb18a708e8bae7f7656726b09234a48585",
-    "models/infant/ncnn_meta.json": "ee9e7fc2b72a09ec17d60bee389cc8742256976fa8f7a49deafe5ebc25e218fa",
+    "models/infant/model_meta.json": "670a4df1e2510a836810a0f03f8678b1fcd6a9c1aa0752ef2cfb1973677fc063",
+    "models/infant/ncnn_meta.json": "e3d3e59ad317f03e287943bbfa6be2bd311c8f7736d5d50ee076c58c9fa4414f",
     "models/objects/model.ncnn.bin": "539bfb34de3d0f1525ba33466129788d6dc911eda6432f875f263d1729921fa0",
     "models/objects/model.ncnn.param": "49bfd78a248af1c2d39e3446f6bfdfab2db2d15ed2ae9631c70db1352458c6c2",
     "models/objects/model.onnx": "f3b6d9b14da649ac8207c7d22378d26ad4f89666eb2626e00a710648a0d3dd50",
-    "models/objects/model_meta.json": "b2088a1ddaa0d6b05bdbe12451409cfd8402277f8508723077d3bbed873a3c67",
-    "models/objects/ncnn_meta.json": "e96c019be2eee94af8c7c3c1872a852e3b829bc4c327c399b623baefedc2f653"
+    "models/objects/model_meta.json": "99050adbd4093f3fa881d8eb42c8ca1229fa6de0dd638ed93b43e5afb23529e9",
+    "models/objects/ncnn_meta.json": "7eb5c4accdb477abdafbdffdab648c3a9d9176e22f323b71e6b5b173c96b2797"
   }
 }

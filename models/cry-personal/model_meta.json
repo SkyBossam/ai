@@ -1,6 +1,6 @@
 {
   "sha256": "284510bf6428c634cd6442e37a911d986a7d26f61dacdc7d024ff1afde9b8cb3",
-  "class_map_sha256": "cdf24d193e196d9e95912a2667051ae203e92a2ba09449218ccb40ef787c6df2",
+  "class_map_sha256": "b03d48f9ebe23f69ea825193de7e736934086a12410f0af47babe897b78bc0d3",
   "files": {
     "cry_personal_acoustic.npz": "cce103c4f4bbd4d3aa1596e1d9894d840bafde7df120fb447e6d32821cb2eed0",
     "cry_personal_basis.npz": "fc24b5ba3c8e8adc129a9b20f7a604a42234678557833ead3762a4c4eea8e46e",
